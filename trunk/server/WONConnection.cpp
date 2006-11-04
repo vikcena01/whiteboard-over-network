@@ -122,8 +122,6 @@ int WONConnection::start()
 						FD_SET(fd, &master);
 						if (fd > fd_max)
 							fd_max = fd;
-
-						userLogin(fd, "blaa");
 					}
 				} else { /* Recieve data. */
 					string str;
@@ -153,22 +151,45 @@ int WONConnection::interpret(int cur_fd)
 	long len;
 	try {
 		message = readall(&len, &level, &flags);
+		char *message_begin = message;
 		if (message == NULL)
 			return -1;
-		if (level == PACKET_SYS) {	
-			if (strncmp(message, "room_create", 11) == 0) { /* Create a new room. */
+		if (level == PACKET_SYS) {
+			if (strncmp(message, "login", 11) == 0) { /* User is loging in. */
+				message += 6;
+				if (userLogin(cur_fd, message) != 0)
+					cout << "Error: while loging in the user" << message;
+			}
+			else if (strncmp(message, "room_create", 11) == 0) { /* Create a new room. */
+				message += 12;
+				if (roomCreate(cur_fd, message, 0) == -1)
+					cout << "Error: room number limit exceeded. \n";
 			}
 			else if (strncmp(message, "room_join", 11) == 0) { /* Join a room. */
+				int status;
+				int room_id;
+				
+				message += 10;
+				room_id = atoi(message);
+				status = roomJoin(cur_fd, room_id);
+				switch (status) {
+					case -1: cout << "Error: invalid room id\n"; break;
+					case -2: cout << "Error: user is already in a room.\n"; break;
+					case -3: cout << "Error: the room does not exist.\n"; break;
+				}
 			}
 			else if (strncmp(message, "room_leave", 11) == 0) { /* Leave a room. */
+				if (roomLeave(cur_fd) != 0)
+					cout << "Error: user could not leave the room.\n";
 			}
 			else if (strncmp(message, "rooms_refresh", 11) == 0) { /* Refresh room list. */
+				roomRefresh(cur_fd);
 			}
 			else if (strncmp(message, "logout", 11) == 0) { /* Log out from the server. */
 			}
 		} else
 			distributeData(cur_fd, message);
-		delete message;
+		delete message_begin;
 	} catch (string str) {
 		cout << "Error while recieving message for the interpreter: " << str << ".\n";
 	}
@@ -257,6 +278,19 @@ int WONConnection::roomLeave(int user_fd)
 
 	room_user->room_id = -1;
 
+	return 0;
+}
+
+int WONConnection::roomRefresh(int user_fd)
+{
+	string room_list = "";
+	
+	for (int i = 0; i < max_users; i++) {
+		if (rooms[i].users)
+			room_list += rooms[i].name + ":" + (char)(48 + i) + "\n";
+	}
+	sendData(room_list, user_fd);
+	
 	return 0;
 }
 

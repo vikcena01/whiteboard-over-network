@@ -88,7 +88,7 @@ public:
 	int roomCreate(int user_fd, string name, int flags);
 	int roomJoin(int user_fd, int room_id);
 	int roomLeave(int user_fd);
-
+	int roomRefresh(int user_fd);
 	int userLogin(int user_fd, string name);
 };
 
