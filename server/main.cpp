@@ -20,6 +20,7 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <cstdlib>
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -29,6 +30,8 @@
 
 #include <strings.h>
 #include <errno.h>
+
+#include <execinfo.h>
 
 #include <signal.h>
 
@@ -48,7 +51,23 @@ using namespace std;
 
 void sig_segfault(int sig)
 {
-	cout << "The program has crashed\n";
+	void *bt_buf[10];
+	char **bt_string;
+	int size, i;
+
+	printf("Terminating proxy server ...\n");
+	if (sig == SIGSEGV) {
+		printf("A fatal segmentation fault occured!\n");
+		size = backtrace(bt_buf, 10); /* Get the backtrace. */
+		bt_string = backtrace_symbols(bt_buf, size);
+		printf("Obtained %d stack frames.\n", size);
+		for (i = 0; i < size; i++)
+			printf("%s\n", bt_string[i]); /* Print the backtrace. */
+			free(bt_string);
+	} else
+		printf("User interrupted the proxy.\n");
+	fflush(stdout);
+	exit(1);
 }
 
 int main(int argc, char **argv)
