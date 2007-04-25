@@ -1,0 +1,12 @@
+
+[Anjuta]
+Maximized=1
+Geometry=1280x949+0+25
+
+[File Loader]
+Files=file:///home/luka/Projects/whiteboard-over-network/src/main.c#114%%%file:///home/luka/Projects/whiteboard-over-network/src/netio.c#37%%%file:///home/luka/Projects/whiteboard-over-network/src/netio.h#8
+
+[Execution]
+Program arguments=
+Run in terminal=2
+Program uri=file:///home/luka/Projects/whiteboard-over-network/src/whiteboard-over-network
