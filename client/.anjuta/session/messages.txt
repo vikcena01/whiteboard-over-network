@@ -1,2 +1,798 @@
 8
-views: 0
+views: 2
+25
+label: New Project Wizard
+40
+pixmap: anjuta-project-wizard-plugin.png
+11
+highlite: 1
+13
+messages: 126
+7
+type: 1
+83
+summary: Creating /home/luka/Projects/whiteboard-over-network/server/AUTHORS ... Ok
+9
+details: 
+7
+type: 1
+85
+summary: Creating /home/luka/Projects/whiteboard-over-network/server/ChangeLog ... Ok
+9
+details: 
+7
+type: 1
+102
+summary: Creating /home/luka/Projects/whiteboard-over-network/server/Makefile.am (using AutoGen)... Ok
+9
+details: 
+7
+type: 1
+80
+summary: Creating /home/luka/Projects/whiteboard-over-network/server/NEWS ... Ok
+9
+details: 
+7
+type: 1
+82
+summary: Creating /home/luka/Projects/whiteboard-over-network/server/README ... Ok
+9
+details: 
+7
+type: 1
+101
+summary: Creating /home/luka/Projects/whiteboard-over-network/server/autogen.sh (using AutoGen)... Ok
+9
+details: 
+7
+type: 1
+103
+summary: Creating /home/luka/Projects/whiteboard-over-network/server/configure.ac (using AutoGen)... Ok
+9
+details: 
+7
+type: 1
+89
+summary: Creating /home/luka/Projects/whiteboard-over-network/server/server.anjuta ... Ok
+9
+details: 
+7
+type: 1
+86
+summary: Creating /home/luka/Projects/whiteboard-over-network/server/.cvsignore ... Ok
+9
+details: 
+7
+type: 1
+106
+summary: Creating /home/luka/Projects/whiteboard-over-network/server/src/Makefile.am (using AutoGen)... Ok
+9
+details: 
+7
+type: 1
+101
+summary: Creating /home/luka/Projects/whiteboard-over-network/server/src/main.c (using AutoGen)... Ok
+9
+details: 
+7
+type: 1
+90
+summary: Creating /home/luka/Projects/whiteboard-over-network/server/src/.cvsignore ... Ok
+9
+details: 
+7
+type: 1
+88
+summary: Creating /home/luka/Projects/whiteboard-over-network/server/po/ChangeLog ... Ok
+9
+details: 
+7
+type: 1
+105
+summary: Creating /home/luka/Projects/whiteboard-over-network/server/po/POTFILES.in (using AutoGen)... Ok
+9
+details: 
+7
+type: 1
+86
+summary: Creating /home/luka/Projects/whiteboard-over-network/server/po/LINGUAS ... Ok
+9
+details: 
+7
+type: 1
+89
+summary: Creating /home/luka/Projects/whiteboard-over-network/server/po/.cvsignore ... Ok
+9
+details: 
+7
+type: 1
+50
+summary: New project has been created successfully
+9
+details: 
+7
+type: 1
+97
+summary: Executing: sh -c 'cd /home/luka/Projects/whiteboard-over-network/server && ./autogen.sh'
+9
+details: 
+7
+type: 0
+70
+summary: **Warning**: I am going to run `configure' with no arguments.
+9
+details: 
+7
+type: 0
+66
+summary: If you wish to pass any to it, please specify them on the
+9
+details: 
+7
+type: 0
+37
+summary: `./autogen.sh' command line.
+9
+details: 
+7
+type: 0
+9
+summary: 
+9
+details: 
+7
+type: 0
+21
+summary: processing .
+9
+details: 
+7
+type: 0
+34
+summary: Creating ./aclocal.m4 ...
+9
+details: 
+7
+type: 0
+63
+summary: Running glib-gettextize...  Ignore non-fatal messages.
+9
+details: 
+7
+type: 0
+35
+summary: Copying file mkinstalldirs
+9
+details: 
+7
+type: 0
+39
+summary: Copying file po/Makefile.in.in
+9
+details: 
+7
+type: 0
+9
+summary: 
+9
+details: 
+7
+type: 0
+29
+summary: Please add the files
+9
+details: 
+7
+type: 0
+78
+summary:   codeset.m4 gettext.m4 glibc21.m4 iconv.m4 isc-posix.m4 lcmessage.m4
+9
+details: 
+7
+type: 0
+22
+summary:   progtest.m4
+9
+details: 
+7
+type: 0
+69
+summary: from the /aclocal directory to your autoconf macro directory
+9
+details: 
+7
+type: 0
+45
+summary: or directly to your aclocal.m4 file.
+9
+details: 
+7
+type: 0
+79
+summary: You will also need config.guess and config.sub, which you can get from
+9
+details: 
+7
+type: 0
+43
+summary: ftp://ftp.gnu.org/pub/gnu/config/.
+9
+details: 
+7
+type: 0
+9
+summary: 
+9
+details: 
+7
+type: 0
+41
+summary: Making ./aclocal.m4 writable ...
+9
+details: 
+7
+type: 0
+31
+summary: Running intltoolize...
+9
+details: 
+7
+type: 0
+29
+summary: Running aclocal  ...
+9
+details: 
+7
+type: 0
+30
+summary: Running autoheader...
+9
+details: 
+7
+type: 0
+36
+summary: Running automake --gnu  ...
+9
+details: 
+7
+type: 0
+51
+summary: configure.ac:24: installing `./config.sub'
+9
+details: 
+7
+type: 0
+47
+summary: configure.ac:6: installing `./missing'
+9
+details: 
+7
+type: 0
+50
+summary: configure.ac:6: installing `./install-sh'
+9
+details: 
+7
+type: 0
+53
+summary: configure.ac:24: installing `./config.guess'
+9
+details: 
+7
+type: 0
+48
+summary: src/Makefile.am: installing `./depcomp'
+9
+details: 
+7
+type: 0
+44
+summary: Makefile.am: installing `./INSTALL'
+9
+details: 
+7
+type: 0
+44
+summary: Makefile.am: installing `./COPYING'
+9
+details: 
+7
+type: 0
+29
+summary: Running autoconf ...
+9
+details: 
+7
+type: 0
+57
+summary: Running ./configure --enable-maintainer-mode ...
+9
+details: 
+7
+type: 0
+69
+summary: checking for a BSD-compatible install... /usr/bin/install -c
+9
+details: 
+7
+type: 0
+58
+summary: checking whether build environment is sane... yes
+9
+details: 
+7
+type: 0
+61
+summary: checking for a thread-safe mkdir -p... /bin/mkdir -p
+9
+details: 
+7
+type: 0
+32
+summary: checking for gawk... no
+9
+details: 
+7
+type: 0
+34
+summary: checking for mawk... mawk
+9
+details: 
+7
+type: 0
+50
+summary: checking whether make sets $(MAKE)... yes
+9
+details: 
+7
+type: 0
+84
+summary: checking whether to enable maintainer-specific portions of Makefiles... yes
+9
+details: 
+7
+type: 0
+58
+summary: checking for style of include used by make... GNU
+9
+details: 
+7
+type: 0
+32
+summary: checking for gcc... gcc
+9
+details: 
+7
+type: 0
+66
+summary: checking for C compiler default output file name... a.out
+9
+details: 
+7
+type: 0
+53
+summary: checking whether the C compiler works... yes
+9
+details: 
+7
+type: 0
+54
+summary: checking whether we are cross compiling... no
+9
+details: 
+7
+type: 0
+47
+summary: checking for suffix of executables... 
+9
+details: 
+7
+type: 0
+49
+summary: checking for suffix of object files... o
+9
+details: 
+7
+type: 0
+64
+summary: checking whether we are using the GNU C compiler... yes
+9
+details: 
+7
+type: 0
+47
+summary: checking whether gcc accepts -g... yes
+9
+details: 
+7
+type: 0
+65
+summary: checking for gcc option to accept ISO C89... none needed
+9
+details: 
+7
+type: 0
+49
+summary: checking dependency style of gcc... gcc3
+9
+details: 
+7
+type: 0
+66
+summary: checking for library containing strerror... none required
+9
+details: 
+7
+type: 0
+41
+summary: checking for gcc... (cached) gcc
+9
+details: 
+7
+type: 0
+73
+summary: checking whether we are using the GNU C compiler... (cached) yes
+9
+details: 
+7
+type: 0
+56
+summary: checking whether gcc accepts -g... (cached) yes
+9
+details: 
+7
+type: 0
+74
+summary: checking for gcc option to accept ISO C89... (cached) none needed
+9
+details: 
+7
+type: 0
+58
+summary: checking dependency style of gcc... (cached) gcc3
+9
+details: 
+7
+type: 0
+41
+summary: checking for gcc... (cached) gcc
+9
+details: 
+7
+type: 0
+73
+summary: checking whether we are using the GNU C compiler... (cached) yes
+9
+details: 
+7
+type: 0
+56
+summary: checking whether gcc accepts -g... (cached) yes
+9
+details: 
+7
+type: 0
+74
+summary: checking for gcc option to accept ISO C89... (cached) none needed
+9
+details: 
+7
+type: 0
+58
+summary: checking dependency style of gcc... (cached) gcc3
+9
+details: 
+7
+type: 0
+57
+summary: checking how to run the C preprocessor... gcc -E
+9
+details: 
+7
+type: 0
+70
+summary: checking for grep that handles long lines and -e... /bin/grep
+9
+details: 
+7
+type: 0
+43
+summary: checking for egrep... /bin/grep -E
+9
+details: 
+7
+type: 0
+48
+summary: checking for ANSI C header files... yes
+9
+details: 
+7
+type: 0
+40
+summary: checking for sys/types.h... yes
+9
+details: 
+7
+type: 0
+39
+summary: checking for sys/stat.h... yes
+9
+details: 
+7
+type: 0
+37
+summary: checking for stdlib.h... yes
+9
+details: 
+7
+type: 0
+37
+summary: checking for string.h... yes
+9
+details: 
+7
+type: 0
+37
+summary: checking for memory.h... yes
+9
+details: 
+7
+type: 0
+38
+summary: checking for strings.h... yes
+9
+details: 
+7
+type: 0
+39
+summary: checking for inttypes.h... yes
+9
+details: 
+7
+type: 0
+37
+summary: checking for stdint.h... yes
+9
+details: 
+7
+type: 0
+37
+summary: checking for unistd.h... yes
+9
+details: 
+7
+type: 0
+56
+summary: checking build system type... i686-pc-linux-gnu
+9
+details: 
+7
+type: 0
+55
+summary: checking host system type... i686-pc-linux-gnu
+9
+details: 
+7
+type: 0
+43
+summary: checking locale.h usability... yes
+9
+details: 
+7
+type: 0
+42
+summary: checking locale.h presence... yes
+9
+details: 
+7
+type: 0
+37
+summary: checking for locale.h... yes
+9
+details: 
+7
+type: 0
+40
+summary: checking for LC_MESSAGES... yes
+9
+details: 
+7
+type: 0
+44
+summary: checking libintl.h usability... yes
+9
+details: 
+7
+type: 0
+43
+summary: checking libintl.h presence... yes
+9
+details: 
+7
+type: 0
+38
+summary: checking for libintl.h... yes
+9
+details: 
+7
+type: 0
+45
+summary: checking for ngettext in libc... yes
+9
+details: 
+7
+type: 0
+45
+summary: checking for dgettext in libc... yes
+9
+details: 
+7
+type: 0
+52
+summary: checking for bind_textdomain_codeset... yes
+9
+details: 
+7
+type: 0
+47
+summary: checking for msgfmt... /usr/bin/msgfmt
+9
+details: 
+7
+type: 0
+38
+summary: checking for dcgettext... yes
+9
+details: 
+7
+type: 0
+45
+summary: checking if msgfmt accepts -c... yes
+9
+details: 
+7
+type: 0
+48
+summary: checking for gmsgfmt... /usr/bin/msgfmt
+9
+details: 
+7
+type: 0
+51
+summary: checking for xgettext... /usr/bin/xgettext
+9
+details: 
+7
+type: 0
+56
+summary: checking for intltool >= 0.35.0... 0.35.5 found
+9
+details: 
+7
+type: 0
+43
+summary: checking for perl... /usr/bin/perl
+9
+details: 
+7
+type: 0
+39
+summary: checking for XML::Parser... ok
+9
+details: 
+7
+type: 0
+45
+summary: checking for iconv... /usr/bin/iconv
+9
+details: 
+7
+type: 0
+47
+summary: checking for msgfmt... /usr/bin/msgfmt
+9
+details: 
+7
+type: 0
+51
+summary: checking for msgmerge... /usr/bin/msgmerge
+9
+details: 
+7
+type: 0
+51
+summary: checking for xgettext... /usr/bin/xgettext
+9
+details: 
+7
+type: 0
+44
+summary: configure: creating ./config.status
+9
+details: 
+7
+type: 0
+41
+summary: config.status: creating Makefile
+9
+details: 
+7
+type: 0
+45
+summary: config.status: creating src/Makefile
+9
+details: 
+7
+type: 0
+47
+summary: config.status: creating po/Makefile.in
+9
+details: 
+7
+type: 0
+41
+summary: config.status: creating config.h
+9
+details: 
+7
+type: 0
+51
+summary: config.status: executing depfiles commands
+9
+details: 
+7
+type: 0
+52
+summary: config.status: executing default-1 commands
+9
+details: 
+7
+type: 0
+51
+summary: config.status: executing intltool commands
+9
+details: 
+7
+type: 0
+54
+summary: config.status: executing po/stamp-it commands
+9
+details: 
+7
+type: 0
+36
+summary: Now type `make' to compile.
+9
+details: 
+17
+label: Subversion
+29
+pixmap: anjuta-subversion.png
+11
+highlite: 1
+11
+messages: 4
+7
+type: 1
+39
+summary: Subversion thread started...: 
+9
+details: 
+7
+type: 1
+71
+summary: Update: /home/luka/Projects/whiteboard-over-network/client/src
+9
+details: 
+7
+type: 1
+81
+summary: Update completed: /home/luka/Projects/whiteboard-over-network/client/src
+9
+details: 
+7
+type: 1
+37
+summary: Subversion command finished!
+9
+details: 
