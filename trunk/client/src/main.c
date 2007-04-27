@@ -96,7 +96,7 @@ int
 main (int argc, char *argv[])
 {
  	GtkWidget *window_login;
-
+	struct security_s *security;
 
 #ifdef ENABLE_NLS
 	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
@@ -109,11 +109,11 @@ main (int argc, char *argv[])
 	gtk_init (&argc, &argv);
 	
 	
-	network_client_init(CRED_ANON);
-
-	window_login = create_window_login();
-	gtk_widget_show (window_login);
-	gtk_main ();
+	security = network_client_init(CRED_ANON);
+	network_connect(security, "0.0.0.0");
+//	window_login = create_window_login();
+	//gtk_widget_show (window_login);
+//	gtk_main ();
 
 	return 0;
 }

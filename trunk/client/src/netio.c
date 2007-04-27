@@ -45,11 +45,16 @@ network_connect(struct security_s *security,
     struct sockaddr_in sa;
     
     s_fd = socket (AF_INET, SOCK_STREAM, 0);
-
-    memset(&sa, '\0', sizeof(sa));
+    if (s_fd < 0) {
+        printf("socket() error\n");
+        return -1;
+    }
+    
+    memset(&(sa.sin_zero), '\0', sizeof(sa));
     sa.sin_family = AF_INET;
-    sa.sin_port = htons(atoi(WON_SERVER_PORT));
-    inet_pton (AF_INET, server, &sa.sin_addr);
+    sa.sin_port = htons(WON_SERVER_PORT);
+    inet_pton(AF_INET, server, &sa.sin_addr);
+   
 
     err = connect(s_fd, (struct sockaddr *)&sa, sizeof(sa));
     if (err < 0) {
