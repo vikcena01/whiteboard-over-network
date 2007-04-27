@@ -25,8 +25,15 @@
 #include <stdio.h>
 #include <glib-2.0/glib.h>
 #include <gnutls/gnutls.h>
+
+#include "netio.h"
+
 int main()
 {
-	printf("Hello world\n");
-	return (0);
+	struct security_s *security;
+	
+	security = network_server_init(CRED_ANON);
+	network_server_loop(security);
+	
+	return 0;
 }

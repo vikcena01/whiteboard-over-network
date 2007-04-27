@@ -16,7 +16,8 @@ AM_CFLAGS =\
 bin_PROGRAMS = server
 
 server_SOURCES = \
-	main.c
+	main.c \
+	netio.c
 
 server_LDFLAGS = 
 
