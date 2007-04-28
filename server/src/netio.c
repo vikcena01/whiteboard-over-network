@@ -11,16 +11,17 @@
 struct security_s *
 network_server_init(int security_policy)
 {
-	struct security_s *security = malloc(sizeof(*security));
+	security = malloc(sizeof(*security));
 
 	gnutls_global_init();
     gnutls_anon_allocate_server_credentials (&security->anoncred);
 	gnutls_dh_params_init(&dh_params);
 	gnutls_dh_params_generate2(dh_params, DH_BITS);
 
-	if (security_policy == CRED_ANON)
+//	if (security_policy == CRED_ANON)
 		gnutls_anon_set_server_dh_params(security->anoncred, dh_params);
-	return security;
+	//return security;
+    return NULL;
 }
 
 gpointer
@@ -55,7 +56,7 @@ network_server_work(gpointer data)
 }
 
 int
-network_server_loop(struct security_s *security)
+network_server_loop()
 {
     struct sockaddr_in sa, sa_cl;
     int *sd;
@@ -65,7 +66,8 @@ network_server_loop(struct security_s *security)
     char topbuf[512];
     
     security->listener = socket (AF_INET, SOCK_STREAM, 0);
-
+    if (security->listener < 0)
+        printf("socket() error.\n");
     memset (&sa, '\0', sizeof(sa));
     sa.sin_family = AF_INET;
     sa.sin_addr.s_addr = INADDR_ANY;
@@ -75,7 +77,11 @@ network_server_loop(struct security_s *security)
                SO_REUSEADDR, &optval, sizeof(int));
 
     err = bind(security->listener, (struct sockaddr *)&sa, sizeof(sa));
+    if (err < 0)
+        printf("bind() error.\n");
     err = listen(security->listener, 1024);
+    if (err < 0)
+        printf("listen() error\n");
     client_len = sizeof(sa_cl);
     
     for (;;) {
@@ -100,14 +106,14 @@ network_session()
     gnutls_session_t session;
     int kx_prio[2];
 
-    gnutls_init (&session, GNUTLS_SERVER);
-    gnutls_set_default_priority (session);
+    gnutls_init(&session, GNUTLS_SERVER);
+    gnutls_set_default_priority(session);
 
     kx_prio[0] = GNUTLS_KX_ANON_DH;
     kx_prio[1] = 0;
 
 	gnutls_kx_set_priority(session, kx_prio);
-	gnutls_credentials_set(session, GNUTLS_CRD_ANON, anoncred);
+	gnutls_credentials_set(session, GNUTLS_CRD_ANON, security->anoncred);
 	gnutls_dh_set_prime_bits(session, DH_BITS);
 
     return session;
