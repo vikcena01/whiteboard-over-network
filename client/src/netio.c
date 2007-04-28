@@ -8,23 +8,22 @@
 
 #include "netio.h"
 
-struct security_s *
+void
 network_client_init(int security_policy)
 {
-	struct security_s *security = malloc(sizeof(*security));
+	security = malloc(sizeof(*security));
 	int kx_prio[2];
 
 	gnutls_global_init ();
 
 	if (security_policy == CRED_ANON) {
-		gnutls_anon_allocate_client_credentials(&security->anoncred);
+		gnutls_anon_allocate_client_credentials(&(security->anoncred));
 	}
 
     /* Initialize TLS session */
-	gnutls_init(&security->session, GNUTLS_CLIENT);
+	gnutls_init(&(security->session), GNUTLS_CLIENT);
     /* Use default priorities */
     gnutls_set_default_priority(security->session);
-    gnutls_kx_set_priority (security->session, kx_prio);
 	if (security_policy == CRED_ANON) {
 		kx_prio[0] = GNUTLS_KX_ANON_DH;
 		kx_prio[1] = 0;
@@ -32,25 +31,24 @@ network_client_init(int security_policy)
 		/* Put the anonymous credentials to the current session */
 		gnutls_credentials_set(security->session, GNUTLS_CRD_ANON,
 							   security->anoncred);
-	}
-	return security;
+	} else
+        printf("Unknown credentials requested\n");
 }
 
-int
-network_connect(struct security_s *security,
-                char *server)
+int 
+network_connect(char *server)
 {
     int s_fd;
     int err, ret;
     struct sockaddr_in sa;
     
-    s_fd = socket (AF_INET, SOCK_STREAM, 0);
+    s_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (s_fd < 0) {
         printf("socket() error\n");
         return -1;
     }
     
-    memset(&(sa.sin_zero), '\0', sizeof(sa));
+    memset(&(sa.sin_zero), '\0', 8);
     sa.sin_family = AF_INET;
     sa.sin_port = htons(WON_SERVER_PORT);
     inet_pton(AF_INET, server, &sa.sin_addr);
@@ -73,8 +71,17 @@ network_connect(struct security_s *security,
     } else {
         printf("- Handshake was completed\n");
     }
-    
-    return s_fd;
+	network_send(PACKET_SYS, "bla", 4, security->session);
+
+    security->s_fd = s_fd;    
+}
+
+void
+network_disconnect()
+{
+    close(security->s_fd);
+    gnutls_deinit(security->session);
+    gnutls_anon_free_client_credentials(security->anoncred);
 }
 
 long long
@@ -120,6 +127,6 @@ network_recv(unsigned int *level,
 	r_len = gnutls_record_recv(session, *data, packet.len);
 	if (r_len < packet.len)
 		return -3;
-	
+        *level = packet.level;	
 	return r_len;
 }

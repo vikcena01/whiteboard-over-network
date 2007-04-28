@@ -7,6 +7,8 @@
 
 /* Got that from Linux kernel ;) */
 #define PACKET_MAGIC 0xDEADBEEF
+#define PACKET_SYS 0x1
+#define PACKET_MSG 0x2
 #define WON_SERVER_PORT 5252
 #define DH_BITS 1024
 

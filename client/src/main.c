@@ -95,22 +95,23 @@ won_client_connect()
 int
 main (int argc, char *argv[])
 {
- 	GtkWidget *window_login;
-	struct security_s *security;
+ //	GtkWidget *window_login;
+//	struct security_s *security;
 
-#ifdef ENABLE_NLS
-	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
-	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-	textdomain (GETTEXT_PACKAGE);
-#endif
+//#ifdef ENABLE_NLS
+//	bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+//	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+//	textdomain (GETTEXT_PACKAGE);
+//#endif
 
 	
-	gtk_set_locale ();
-	gtk_init (&argc, &argv);
+//	gtk_set_locale ();
+//	gtk_init (&argc, &argv);
 	
-	
-	security = network_client_init(CRED_ANON);
-	network_connect(security, "0.0.0.0");
+	network_client_init(CRED_ANON);
+	network_connect("0.0.0.0");
+	network_send(PACKET_SYS, "test", 4, security->session);
+	network_disconnect();
 //	window_login = create_window_login();
 	//gtk_widget_show (window_login);
 //	gtk_main ();
