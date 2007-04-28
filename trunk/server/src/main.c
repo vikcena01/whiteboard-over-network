@@ -32,9 +32,7 @@
 int main(int argc, char **argv)
 {
 	int port;
-	struct security_s *security;
-	
-	
+
 	if (argc > 1) {
 		if (strcmp(argv[1], "-p") == 0)
 			port = atoi(argv[2]);
@@ -46,8 +44,8 @@ int main(int argc, char **argv)
 	}
 	g_thread_init(NULL);
 	
-	security = network_server_init(CRED_ANON);
-	network_server_loop(security);
+	network_server_init(CRED_ANON);
+	network_server_loop();
 	
 	return 0;
 }

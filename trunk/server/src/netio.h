@@ -36,9 +36,8 @@ typedef struct {
 } won_server_t;
 
 static gnutls_dh_params_t dh_params;
-gnutls_anon_server_credentials_t anoncred;
 won_server_t *won_server;
-
+struct security_s *security;
 /*
  * Initializes GnuTLS session and sets credentials.
  */
@@ -52,7 +51,7 @@ network_server_work(gpointer data);
  * Get the server into a loop. 
  */
 int
-network_server_loop(struct security_s *security);
+network_server_loop();
 
 /*
  * Creates a new TLS session.
