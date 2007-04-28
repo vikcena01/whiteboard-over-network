@@ -7,6 +7,8 @@
 
 /* Got that from Linux kernel ;) */
 #define PACKET_MAGIC 0xDEADBEEF
+#define PACKET_SYS 0x1
+#define PACKET_MSG 0x2
 #define WON_SERVER_PORT 5252
 
 /* Possible credentials. */
@@ -18,6 +20,7 @@
 static gnutls_dh_params_t dh_params;
 
 struct security_s {
+	int s_fd;
 	gnutls_session_t session;
 	/* Possible credentials. */
 	gnutls_anon_client_credentials_t anoncred;
@@ -31,18 +34,22 @@ typedef struct {
 	long long len;
 } packet_t;
 
+struct security_s *security;
 /*
  * Initializes GnuTLS session and sets credentials.
  */
-struct security_s *network_client_init(int security_policy);
+void
+network_client_init(int security_policy);
 
 /*
  * Connects to a host and thy to handshake. 
  * Returns the socket descriptor.
  */
 int
-network_connect(struct security_s *security,
-                char *server);
+network_connect(char *server);
+
+void
+network_disconnect();
 
 /*
  * Sends package.

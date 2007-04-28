@@ -4,7 +4,7 @@ Maximized=1
 Geometry=1280x949+0+25
 
 [File Loader]
-Files=file:///home/luka/Projects/whiteboard-over-network/client/src/netio.c#32%%%file:///home/luka/Projects/whiteboard-over-network/client/src/Makefile.am#27%%%file:///home/luka/Projects/whiteboard-over-network/client/autogen.sh#1%%%file:///home/luka/Projects/whiteboard-over-network/client/Makefile.am#1%%%file:///home/luka/Projects/whiteboard-over-network/client/README#1
+Files=file:///home/luka/Projects/whiteboard-over-network/client/src/netio.c#65%%%file:///home/luka/Projects/whiteboard-over-network/client/src/main.c#113%%%file:///home/luka/Projects/whiteboard-over-network/client/src/netio.h#18
 
 [Execution]
 Program arguments=

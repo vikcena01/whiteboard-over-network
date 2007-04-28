@@ -46,7 +46,13 @@ network_server_work(gpointer data)
     }
     printf("Handshake completed\n");
     while (1) { /* Do stuff. */
-        gnutls_record_send (session, "abc", 3);
+            int level;
+            char *data;
+            if (network_recv(&level, &data, session) < 1) {
+                printf("Lost connection\n");
+                break;
+            }
+            printf("Got package(level %d): %s\n", level, data);
     }
     /* End the gnutls session. */
     gnutls_bye(session, GNUTLS_SHUT_WR);
@@ -162,6 +168,6 @@ network_recv(unsigned int *level,
 	r_len = gnutls_record_recv(session, *data, packet.len);
 	if (r_len < packet.len)
 		return -3;
-	
+	*level = packet.level;
 	return r_len;
 }
