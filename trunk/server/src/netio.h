@@ -16,13 +16,10 @@
 #define CRED_PASS 0x3
 #define CRED_OPGP 0x4
 
-static gnutls_dh_params_t dh_params;
-gnutls_anon_server_credentials_t anoncred;
-
 struct security_s {
 	gnutls_session_t session;
 	/* Possible credentials. */
-	gnutls_anon_client_credentials_t anoncred;
+	gnutls_anon_server_credentials_t anoncred;
     int listener;
 };
 
@@ -34,10 +31,22 @@ typedef struct {
 	long long len;
 } packet_t;
 
+typedef struct {
+    GList *client_fds;
+} won_server_t;
+
+static gnutls_dh_params_t dh_params;
+gnutls_anon_server_credentials_t anoncred;
+won_server_t *won_server;
+
 /*
  * Initializes GnuTLS session and sets credentials.
  */
 struct security_s *network_server_init(int security_policy);
+
+/* The worker thread for connections. */
+gpointer
+network_server_work(gpointer data);
 
 /*
  * Get the server into a loop. 

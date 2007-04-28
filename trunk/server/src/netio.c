@@ -12,26 +12,53 @@ struct security_s *
 network_server_init(int security_policy)
 {
 	struct security_s *security = malloc(sizeof(*security));
-	int kx_prio[2];
 
-	gnutls_global_init ();
+	gnutls_global_init();
+    gnutls_anon_allocate_server_credentials (&security->anoncred);
+	gnutls_dh_params_init(&dh_params);
+	gnutls_dh_params_generate2(dh_params, DH_BITS);
 
-	if (security_policy == CRED_ANON) {
-		gnutls_anon_allocate_server_credentials(&security->anoncred);
-	}
-
-    gnutls_dh_params_init (&dh_params);
-    gnutls_dh_params_generate2 (dh_params, DH_BITS);
-    gnutls_anon_set_server_dh_params (security->anoncred, dh_params);
-    
+	if (security_policy == CRED_ANON)
+		gnutls_anon_set_server_dh_params(security->anoncred, dh_params);
 	return security;
+}
+
+gpointer
+network_server_work(gpointer data)
+{
+    int sd = *((int *)data);
+    int ret;
+    gnutls_session_t session;
+    
+    pthread_detach (pthread_self());
+    g_free(data);
+    session = network_session();
+    
+    gnutls_transport_set_ptr (session, (gnutls_transport_ptr_t)sd);
+    ret = gnutls_handshake(session);
+    if (ret < 0) {
+        close(sd);
+        gnutls_deinit(session);
+        printf("Handshake failed (%s)\n\n",
+            gnutls_strerror(ret));
+        return NULL;
+    }
+    printf("Handshake completed\n");
+    while (1) { /* Do stuff. */
+        gnutls_record_send (session, "abc", 3);
+    }
+    /* End the gnutls session. */
+    gnutls_bye(session, GNUTLS_SHUT_WR);
+    close(sd);
+    gnutls_deinit(session);
+    return NULL;
 }
 
 int
 network_server_loop(struct security_s *security)
 {
     struct sockaddr_in sa, sa_cl;
-    int sd;
+    int *sd;
     gnutls_session_t session;
     int optval = 1;
     int err, client_len, ret;
@@ -52,24 +79,14 @@ network_server_loop(struct security_s *security)
     client_len = sizeof(sa_cl);
     
     for (;;) {
-        session = network_session();
-
-        sd = accept(security->listener, (struct sockaddr *)&sa_cl, &client_len);
-
+        GThread *thread;
+        
+        sd = g_malloc(sizeof(int));
+        *sd = accept(security->listener, (struct sockaddr *)&sa_cl, (socklen_t *)&client_len);
+        g_thread_create(network_server_work, sd, FALSE, NULL);
         printf ("- connection from %s, port %d\n", 
                 inet_ntop(AF_INET, &sa_cl.sin_addr, topbuf,
                 sizeof (topbuf)), ntohs(sa_cl.sin_port));
-
-        gnutls_transport_set_ptr (session, (gnutls_transport_ptr_t)sd);
-        ret = gnutls_handshake(session);
-        if (ret < 0) {
-            close(sd);
-            gnutls_deinit(session);
-            printf("Handshake failed (%s)\n\n",
-                   gnutls_strerror(ret));
-            continue;
-        }
-        printf("Handshake completed\n");
     }
     return 0;
 }
@@ -81,15 +98,17 @@ network_session()
     int err, ret;
     struct sockaddr_in sa;
     gnutls_session_t session;
-    const int kx_prio[] = { GNUTLS_KX_ANON_DH, 0 };
+    int kx_prio[2];
 
     gnutls_init (&session, GNUTLS_SERVER);
     gnutls_set_default_priority (session);
-    gnutls_kx_set_priority (session, kx_prio);
 
-    gnutls_credentials_set (session, GNUTLS_CRD_ANON, anoncred);
+    kx_prio[0] = GNUTLS_KX_ANON_DH;
+    kx_prio[1] = 0;
 
-    gnutls_dh_set_prime_bits (session, DH_BITS);
+	gnutls_kx_set_priority(session, kx_prio);
+	gnutls_credentials_set(session, GNUTLS_CRD_ANON, anoncred);
+	gnutls_dh_set_prime_bits(session, DH_BITS);
 
     return session;
 }

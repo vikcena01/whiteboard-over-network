@@ -27,10 +27,24 @@
 #include <gnutls/gnutls.h>
 
 #include "netio.h"
+#include "../config.h"
 
-int main()
+int main(int argc, char **argv)
 {
+	int port;
 	struct security_s *security;
+	
+	
+	if (argc > 1) {
+		if (strcmp(argv[1], "-p") == 0)
+			port = atoi(argv[2]);
+		else if (strcmp(argv[1], "-v") == 0)
+			printf(PACKAGE_VERSION"\n");
+		else if (strcmp(argv[1], "--help") == 0)
+			printf("\t-p : specify port\n\n");
+		
+	}
+	g_thread_init(NULL);
 	
 	security = network_server_init(CRED_ANON);
 	network_server_loop(security);
