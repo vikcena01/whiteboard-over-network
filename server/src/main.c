@@ -23,8 +23,9 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include <glib-2.0/glib.h>
-#include <gnutls/gnutls.h>
+
 
 #include "netio.h"
 #include "../config.h"

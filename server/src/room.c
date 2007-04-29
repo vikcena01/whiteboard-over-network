@@ -1,17 +1,19 @@
+#include <string.h>
+
 #include "room.h"
+#include "user.h"
 
 void rooms_init()
 {
 	int i;
 
 	for (i = 0; i < MAX_USERS; i++) {
-		users[i].name = NULL;
-		users[i].room_id = -1;
+		rooms[i].users = NULL;
 	}
 }
 
 int
-room_create(char *name, int creator_sd);
+room_create(char *name, int creator_sd)
 {
 	int i;
 
@@ -20,9 +22,9 @@ room_create(char *name, int creator_sd);
 	if (i == MAX_USERS)
 		return -1; /* No room free. */
 	rooms[i].creator = creator_sd;
-	strncpy(name, rooms[i].name, 32);
-	rooms[i].users = g_list_append (rooms[i].users, 
-		GUINT_TO_POINTER(creator_sd));
+	strncpy(rooms[i].name, name, 32);
+    rooms[i].users = g_list_append (rooms[i].users, 
+        GUINT_TO_POINTER(creator_sd));
 
 	return 0;
 }
@@ -36,9 +38,20 @@ room_destroy(char *name)
 		if (strcmp(rooms[i].name, name) == 0)
 			break;
 	}
-	rooms[i].name = NULL;
+	rooms[i].users = NULL;
 	rooms[i].creator = -1;
+    
+    return 0;
 }
 
 int
 room_distribute(int sd, void *data)
+{
+    return 0;
+}
+
+int
+room_refresh()
+{
+    return 0;
+}
