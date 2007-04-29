@@ -1,5 +1,7 @@
 #summary Changes for milestone 1
-TODO for milestone 1
- * Basic TLS server/client with anonymous login
- * Basic UI for Logging to the server and showing active rooms
+=TODO for milestone 1=
+==Basic TLS server/client with anonymous login==
+Practically done.
+==Basic UI for Logging to the server and showing active rooms==
+Done but not functional.
 
