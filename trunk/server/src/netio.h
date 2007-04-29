@@ -45,6 +45,13 @@ struct security_s *security;
  */
 struct security_s *network_server_init(int security_policy);
 
+/*
+ * Interprets client messages. 
+ */
+int
+network_interpret(int sd,
+                  char *cmd);
+
 /* The worker thread for connections. */
 gpointer
 network_server_work(gpointer data);

@@ -1,12 +1,15 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
-
+#include <pthread.h>
 #include <unistd.h>
 
 #include "netio.h"
+#include "room.h"
+#include "user.h"
 
 struct security_s *
 network_server_init(int security_policy)
@@ -24,11 +27,44 @@ network_server_init(int security_policy)
     return NULL;
 }
 
+int
+network_interpret(int sd,
+                  char *cmd)
+{
+    char *tmp = cmd;
+    if (strstr(cmd, "login") == 0) {
+        cmd += 5;
+        user_login(sd, cmd);
+    }
+    else if (strstr(cmd, "logout") == 0)
+        user_logout(sd);
+    else if (strstr(cmd, "join") == 0) {
+        tmp = cmd;
+        cmd += 5;
+        if (user_join(sd, cmd) != 0)
+            printf("Could not join room %s\n", cmd);
+    }
+    //else if (strstr(cmd, "part") == 0)
+       // room_part();
+    else if (strstr(cmd, "create") == 0) {
+        cmd += 7;
+        if (room_create(cmd, sd) != 0)
+            printf("Could not create room %s\n", cmd);
+    }
+    else if (strstr(cmd, "refresh") == 0)
+        room_refresh();
+
+    free(tmp);
+    return 0;
+}
+
 gpointer
 network_server_work(gpointer data)
 {
     int sd = *((int *)data);
     int ret;
+    char *packet_data;
+    unsigned int level;
     gnutls_session_t session;
     
     pthread_detach (pthread_self());
@@ -45,14 +81,15 @@ network_server_work(gpointer data)
         return NULL;
     }
     printf("Handshake completed\n");
+    
     while (1) { /* Do stuff. */
-            int level;
-            char *data;
-            if (network_recv(&level, &data, session) < 1) {
+            if (network_recv(&level, (void **)&packet_data, session) < 1) {
                 printf("Lost connection\n");
                 break;
             }
-            printf("Got package(level %d): %s\n", level, data);
+            //printf("Got package(level %d): %s\n", level, data);
+            network_interpret(sd, packet_data);
+            free(packet_data);
     }
     /* End the gnutls session. */
     gnutls_bye(session, GNUTLS_SHUT_WR);
@@ -66,9 +103,8 @@ network_server_loop()
 {
     struct sockaddr_in sa, sa_cl;
     int *sd;
-    gnutls_session_t session;
     int optval = 1;
-    int err, client_len, ret;
+    int err, client_len;
     char topbuf[512];
     
     security->listener = socket (AF_INET, SOCK_STREAM, 0);
@@ -91,8 +127,6 @@ network_server_loop()
     client_len = sizeof(sa_cl);
     
     for (;;) {
-        GThread *thread;
-        
         sd = g_malloc(sizeof(int));
         *sd = accept(security->listener, (struct sockaddr *)&sa_cl, (socklen_t *)&client_len);
         g_thread_create(network_server_work, sd, FALSE, NULL);
@@ -106,9 +140,6 @@ network_server_loop()
 gnutls_session_t 
 network_session()
 {
-    int s_fd;
-    int err, ret;
-    struct sockaddr_in sa;
     gnutls_session_t session;
     int kx_prio[2];
 
