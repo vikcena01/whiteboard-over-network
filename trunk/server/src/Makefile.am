@@ -17,10 +17,14 @@ bin_PROGRAMS = server
 
 server_SOURCES = \
 	main.c \
-	netio.c
+	netio.c \
+	room.c \
+	user.c 
 
 server_LDFLAGS = 
 
 server_LDADD = $(GLIB_LIBS) \
                $(GNUTLS_LIBS)
+
+
 
