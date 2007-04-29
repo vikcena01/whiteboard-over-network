@@ -34,6 +34,7 @@ network_interpret(int sd,
     char *tmp = cmd;
     if (strstr(cmd, "login") == 0) {
         cmd += 5;
+	printf("* Logging in user \'%s\'\n", cmd);
         user_login(sd, cmd);
     }
     else if (strstr(cmd, "logout") == 0)
@@ -42,19 +43,19 @@ network_interpret(int sd,
         tmp = cmd;
         cmd += 5;
         if (user_join(sd, cmd) != 0)
-            printf("Could not join room %s\n", cmd);
+            printf("Could not join room \'%s\'\n", cmd);
     }
     //else if (strstr(cmd, "part") == 0)
        // room_part();
     else if (strstr(cmd, "create") == 0) {
         cmd += 7;
         if (room_create(cmd, sd) != 0)
-            printf("Could not create room %s\n", cmd);
+            printf("Could not create room \'%s\'\n", cmd);
     }
     else if (strstr(cmd, "refresh") == 0)
         room_refresh();
 
-    free(tmp);
+//    free(tmp);
     return 0;
 }
 
@@ -87,7 +88,7 @@ network_server_work(gpointer data)
                 printf("Lost connection\n");
                 break;
             }
-            //printf("Got package(level %d): %s\n", level, data);
+            printf("Got package(level %d): %s\n", level, data);
             network_interpret(sd, packet_data);
             free(packet_data);
     }

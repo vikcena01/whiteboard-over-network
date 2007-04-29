@@ -45,7 +45,8 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
-am_server_OBJECTS = main.$(OBJEXT) netio.$(OBJEXT)
+am_server_OBJECTS = main.$(OBJEXT) netio.$(OBJEXT) room.$(OBJEXT) \
+	user.$(OBJEXT)
 server_OBJECTS = $(am_server_OBJECTS)
 am__DEPENDENCIES_1 =
 server_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
@@ -218,7 +219,9 @@ AM_CFLAGS = \
 
 server_SOURCES = \
 	main.c \
-	netio.c
+	netio.c \
+	room.c \
+	user.c 
 
 server_LDFLAGS = 
 server_LDADD = $(GLIB_LIBS) \
@@ -292,6 +295,8 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/netio.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/room.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/user.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

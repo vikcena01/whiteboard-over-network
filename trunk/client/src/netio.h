@@ -35,6 +35,9 @@ typedef struct {
 } packet_t;
 
 struct security_s *security;
+GAsyncQueue *sys_queue; /* All recieved system commands are here. */
+GAsyncQueue *msg_queue; /* All recieved non-system messages are here. */
+
 /*
  * Initializes GnuTLS session and sets credentials.
  */
@@ -68,4 +71,9 @@ network_recv(unsigned int *level,
              void **data,
              gnutls_session_t session);
 
+/*
+ * The reciever thread.
+ */
+gpointer
+network_reciever(gpointer data);
 #endif

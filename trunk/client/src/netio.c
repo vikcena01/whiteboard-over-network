@@ -3,7 +3,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
-
+#include <pthread.h>
 #include <unistd.h>
 
 #include "netio.h"
@@ -71,9 +71,9 @@ network_connect(char *server)
     } else {
         printf("- Handshake was completed\n");
     }
-	network_send(PACKET_SYS, "bla", 4, security->session);
 
-    security->s_fd = s_fd;    
+    security->s_fd = s_fd;
+	return 0;
 }
 
 void
@@ -130,3 +130,25 @@ network_recv(unsigned int *level,
         *level = packet.level;	
 	return r_len;
 }
+
+gpointer
+network_reciever(gpointer data)
+{
+	char *buffer;
+	unsigned int level;
+	sys_queue = g_async_queue_new();
+	msg_queue = g_async_queue_new();
+	pthread_detach(pthread_self());
+	while (1) {
+		if (network_recv(&level, (void **)buffer, security->session) < 1)
+			break;
+		if (level == PACKET_SYS)
+			g_async_queue_push(sys_queue, buffer);
+		else if (level == PACKET_MSG)
+			g_async_queue_push(msg_queue, buffer);
+		else
+			printf("Cannot specify target for packet(not sys and msg).\n");
+	}
+	
+}
+
